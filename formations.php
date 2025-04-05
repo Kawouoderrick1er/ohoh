@@ -1,13 +1,33 @@
 <?php
+session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['valider'])) {
     $formation = $_POST['formation'];
     $moyen_paiement = $_POST['moyen_paiement'];
     $telephone = $_POST['telephone'];
     $montant = $_POST['montant'];
 
-    // Ici, vous pouvez ajouter le code pour traiter le paiement et enregistrer les détails dans la base de données
+    // Connexion à la base de données
+    try {
+        $conn = new PDO("mysql:host=localhost;dbname=formation_professionnelle", "root", "");
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $message = "Votre inscription à la formation $formation a été validée. Vous serez contacté au numéro $telephone.";
+        // Insertion des données dans la table inscriptions
+        $sql = "INSERT INTO inscriptions (utilisateur_id, formation, moyen_paiement, telephone, montant) VALUES (:utilisateur_id, :formation, :moyen_paiement, :telephone, :montant)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':utilisateur_id', $_SESSION['user_id']);
+        $stmt->bindParam(':formation', $formation);
+        $stmt->bindParam(':moyen_paiement', $moyen_paiement);
+        $stmt->bindParam(':telephone', $telephone);
+        $stmt->bindParam(':montant', $montant);
+
+        if ($stmt->execute()) {
+            $message = "Votre inscription à la formation $formation a été validée. Vous serez contacté au numéro $telephone.";
+        } else {
+            $message = "Erreur lors de l'inscription.";
+        }
+    } catch (PDOException $e) {
+        $message = "Erreur de connexion à la base de données: " . $e->getMessage();
+    }
 }
 ?>
 <!DOCTYPE html>

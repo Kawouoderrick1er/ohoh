@@ -58,3 +58,5 @@ CREATE TABLE commentaires (
     reference_id INT,
     FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs(id)
 );
+
+ALTER TABLE `utilisateurs` ADD `telephone` INT(255) NULL DEFAULT NULL AFTER `date_inscription`;
