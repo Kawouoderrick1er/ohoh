@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>D-X-T</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Styles CSS personnalisés */
         body {
@@ -44,11 +45,13 @@
         .hero h1 {
             font-size: 3em;
             margin-bottom: 20px;
+            animation: fadeInDown 1s ease-in-out;
         }
 
         .hero p {
             font-size: 1.2em;
             margin-bottom: 30px;
+            animation: fadeInDown 1.5s ease-in-out;
         }
 
         .services {
@@ -59,6 +62,11 @@
         .service-item {
             text-align: center;
             padding: 20px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .service-item:hover {
+            transform: scale(1.05);
         }
 
         .service-item img {
@@ -86,6 +94,7 @@
         .btn-primary {
             background-color: #007bff;
             border-color: #007bff;
+            transition: background-color 0.3s ease-in-out;
         }
 
         .btn-primary:hover {
@@ -129,10 +138,11 @@
             cursor: pointer;
             background-color: #007bff;
             color: white;
+            transition: background-color 0.3s ease-in-out;
         }
 
         .auth-buttons button:hover {
-            background-color:rgba(15, 14, 14, 0.73);
+            background-color: rgba(15, 14, 14, 0.73);
         }
 
         .auth-buttons button:active {
@@ -231,6 +241,18 @@
             font-size: 0.9em;
             color: #333;
         }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body>
@@ -251,7 +273,7 @@
                         <a class="nav-link" href="#">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">profil</a>
+                        <a class="nav-link" href="#">Profil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Blog</a>
@@ -274,8 +296,8 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <h1>Dévéloppez vos compétences. Nous vous aidons à attiendre vos objectif!</h1>
-                    <p> Nous vous offrons un accès à un réseau global de formation pour avancer bos carrières et atteindre vos objectifs stractégiques.</p>
+                    <h1>Développez vos compétences. Nous vous aidons à atteindre vos objectifs !</h1>
+                    <p>Nous vous offrons un accès à un réseau global de formation pour avancer vos carrières et atteindre vos objectifs stratégiques.</p>
                     <button class="btn btn-primary">Nos Services</button>
                 </div>
                 <div class="col-md-6">
@@ -287,16 +309,15 @@
     <section class="about">
         <div class="container">
             <div class="row align-items-center">
-                <p class="text-center fw-bold text-uppercase fs-3">A propos de nous</p>
+                <p class="text-center fw-bold text-uppercase fs-3">À propos de nous</p>
                 <div class="col-md-6">
                     <img src="Images/IMG-20250319-WA0029.jpg" alt="About Us" class="img-fluid">
                 </div>
                 <div class="col-md-6">
                     <h2>Bienvenue à D-X-T !</h2>
-                    <p> Nous sommes specialisés dans les technologies numeriques. Notre mission est de vous à dévélopper vos compétences et à réussir dans le monde 
-                    nulérique. Nous proposons des formations de haute qualité, 
-                    accessibles en ligne, pour vous aider à atteindre vos objectifs professionnels. Rejoignez notre communauté d'apprents et de professionnels pour partager
-                    vos connaissances et vos experiences</p>
+                    <p>Nous sommes spécialisés dans les technologies numériques. Notre mission est de vous aider à développer vos compétences et à réussir dans le monde 
+                    numérique. Nous proposons des formations de haute qualité, accessibles en ligne, pour vous aider à atteindre vos objectifs professionnels. Rejoignez notre communauté d'apprenants et de professionnels pour partager
+                    vos connaissances et vos expériences.</p>
                     <button class="btn btn-primary">Nous Rejoindre</button>
                 </div>
             </div>
@@ -329,7 +350,7 @@
                 <div class="col-md-4 service-item">
                     <a href="formation4.html">
                         <img src="Images/IMG-20250318-WA0017.jpg" alt="Service 4">
-                        <h3>infographie</h3>
+                        <h3>Infographie</h3>
                     </a>
                 </div>
                 <div class="col-md-4 service-item">
@@ -341,7 +362,7 @@
                 <div class="col-md-4 service-item">
                     <a href="formation6.html">
                         <img src="Images/IMG-20250318-WA0017.jpg" alt="Service 6">
-                        <h3>audit SI</h3>
+                        <h3>Audit SI</h3>
                     </a>
                 </div>
             </div>
@@ -349,30 +370,29 @@
                 <div class="col-md-4 service-item">
                     <a href="formation7.html">
                         <img src="Images/IMG-20250318-WA0017.jpg" alt="Service 7">
-                        <h3>securite informatique</h3>
+                        <h3>Sécurité informatique</h3>
                     </a>
                 </div>
                 <div class="col-md-4 service-item">
                     <a href="formation8.html">
                         <img src="Images/IMG-20250318-WA0017.jpg" alt="Service 8">
-                        <h3>reseau</h3>
+                        <h3>Réseau</h3>
                     </a>
                 </div>
                 <div class="col-md-4 service-item">
                     <a href="formation9.html">
                         <img src="Images/IMG-20250318-WA0017.jpg" alt="Service 9">
-                        <h3>gestion d'entreprise</h3>
+                        <h3>Gestion d'entreprise</h3>
                     </a>
                 </div>
             </div>
         </div>
         <div class="text-center">
-            <a href="#" class="btn btn-primary">Voir tout les categories </a> <!-- mettre un + en gras -->
+            <a href="#" class="btn btn-primary"><strong>+</strong> Voir toutes les catégories</a>
         </div>
         <div class="arrow-left">&#8249;</div>
         <div class="arrow-right">&#8250;</div>
     </section>
-    
     
     <style>
         .contact {
@@ -399,7 +419,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="contact-form">
-                        <h2>Contactez-nous</h2> <!-- centrer le mots -->
+                        <h2>Contactez-nous</h2>
                         <form action="#" method="post">
                             <div class="mb-3">
                                 <label for="nom" class="form-label">Nom :</label>
@@ -423,5 +443,15 @@
             require_once 'foote.php';
         ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // JavaScript pour les flèches de défilement des services
+        document.querySelector('.arrow-left').addEventListener('click', function() {
+            document.querySelector('.services .container').scrollLeft -= 300;
+        });
+
+        document.querySelector('.arrow-right').addEventListener('click', function() {
+            document.querySelector('.services .container').scrollLeft += 300;
+        });
+    </script>
 </body>
 </html>
