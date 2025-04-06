@@ -15,7 +15,7 @@ body {
 }
 
 .main-footer {
-    background-color:rgba(24, 24, 43, 0.33);
+    background-color: rgba(24, 24, 43, 0.33);
     padding: 38px;
 }
 
@@ -43,6 +43,7 @@ body {
     cursor: pointer;
     text-decoration: none;
     color: white;
+    transition: background-color 0.3s ease-in-out;
 }
 
 .demo-button {
@@ -50,7 +51,11 @@ body {
 }
 
 .mooc-button {
-    background-color:rgb(3, 38, 68);
+    background-color: rgb(3, 38, 68);
+}
+
+.button:hover {
+    background-color: #0056b3;
 }
 
 /* Section des liens */
@@ -85,6 +90,10 @@ body {
     color: #333;
 }
 
+.footer-links-col a:hover {
+    color: #007bff;
+}
+
 /* Section inférieure */
 .footer-bottom {
     display: flex;
@@ -104,6 +113,10 @@ body {
     color: #333;
 }
 
+.legal-links a:hover {
+    color: #007bff;
+}
+
 /* Responsivité */
 @media (max-width: 768px) {
     .footer-buttons {
@@ -120,10 +133,6 @@ body {
         text-align: center;
     }
 }
-/* .main-footer {
-    background: linear-gradient(to bottom,rgb(28, 26, 29),rgb(90, 22, 158)); /* Exemple de dégradé */
-   
-/* }  */
 </style>
 <body>
     <footer class="main-footer">
@@ -177,7 +186,7 @@ body {
                     <li><a href="">Partenaires diffusion</a></li>
                     <li><a href="">Partenaires contenu</a></li>
                     <li><a href="">Espace presse</a></li>
-                   <li><a href="">L&D for good</a></li>
+                    <li><a href="">L&D for good</a></li>
                 </ul>
             </div>
             <div class="footer-links-col">

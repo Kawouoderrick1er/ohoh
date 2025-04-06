@@ -8,106 +8,88 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Styles CSS personnalisés */
-        button a{
-   text-decoration: none;  
-   color: var(--light);
-   font-weight:700;
-   /* font-size: 8px; */
-}
+        button a {
+            text-decoration: none;
+            color: var(--light);
+            font-weight: 700;
+        }
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
             color: #333;
         }
-
         .navbar {
             background-color: #f0f0f0;
             padding: 20px 0;
         }
-
         .navbar-brand img {
             height: 40px;
         }
-
         .navbar-nav .nav-link {
             color: #333;
             margin: 0 15px;
         }
-
         .navbar-nav .nav-link:hover {
             color: #007bff;
         }
-
         .hero {
             background: linear-gradient(to right, #6a11cb, #2575fc);
             color: white;
             text-align: left;
             padding: 100px 20px;
             position: relative;
-            overflow: visible; /* Permet au contenu de déborder */
+            overflow: visible;
         }
-
         .hero h1 {
             font-size: 3em;
             margin-bottom: 20px;
             animation: fadeInDown 1s ease-in-out;
         }
-
         .hero p {
             font-size: 1.2em;
             margin-bottom: 30px;
             animation: fadeInDown 1.5s ease-in-out;
         }
-
         .services {
             position: relative;
             padding: 50px 20px;
         }
-
         .service-item {
             text-align: center;
             padding: 20px;
             transition: transform 0.3s ease-in-out;
         }
-
         .service-item:hover {
             transform: scale(1.05);
         }
-
         .service-item img {
             height: 50px;
             margin-bottom: 20px;
         }
-
         .about {
             background-color: #f8f9fa;
             padding: 50px 20px;
         }
-
         .about img {
             max-width: 100%;
             height: auto;
         }
-
         footer {
             background-color: #343a40;
             color: white;
             text-align: center;
             padding: 20px 0;
         }
-
         .btn-primary {
             background-color: #007bff;
             border-color: #007bff;
             transition: background-color 0.3s ease-in-out;
         }
-
         .btn-primary:hover {
             background-color: #0056b3;
             border-color: #0056b3;
         }
-
         .arrow-left, .arrow-right {
             position: absolute;
             top: 50%;
@@ -117,25 +99,20 @@
             cursor: pointer;
             user-select: none;
         }
-
         .arrow-left {
             left: 10px;
         }
-
         .arrow-right {
             right: 10px;
         }
-
         .search-bar {
             margin-right: 20px;
         }
-
         .search-bar input[type="search"] {
             border-radius: 20px;
             padding: 8px 15px;
             border: 1px solid #ccc;
         }
-
         .auth-buttons button {
             margin-left: 10px;
             padding: 8px 15px;
@@ -146,15 +123,12 @@
             color: white;
             transition: background-color 0.3s ease-in-out;
         }
-
         .auth-buttons button:hover {
             background-color: rgba(15, 14, 14, 0.73);
         }
-
         .auth-buttons button:active {
             transform: scale(0.95);
         }
-
         /* Styles responsives */
         @media (max-width: 768px) {
             .search-bar, .auth-buttons {
@@ -163,28 +137,24 @@
                 margin: 10px 0;
                 text-align: center;
             }
-
             .search-bar input[type="search"] {
                 width: 80%;
             }
-
             .auth-buttons button {
                 width: 40%;
                 margin: 5px;
             }
         }
-
         /* Styles pour les cartes de formation */
         .formation-cards {
             display: flex;
             justify-content: center;
             position: absolute;
-            bottom: -50px; /* Ajustez cette valeur pour le débordement */
+            bottom: -50px;
             left: 0;
             right: 0;
             padding: 0 20px;
         }
-
         .formation-card {
             background-color: white;
             padding: 20px;
@@ -193,22 +163,18 @@
             text-align: center;
             flex: 1;
         }
-
         .formation-card img {
             height: 80px;
             margin-bottom: 10px;
         }
-
         .formation-card h3 {
             font-size: 1.2em;
         }
-
         .container-categories {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
         }
-
         .category {
             background-color: white;
             padding: 20px;
@@ -216,7 +182,6 @@
             text-align: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-
         .icon {
             width: 80px;
             height: 80px;
@@ -227,7 +192,6 @@
             align-items: center;
             margin: 0 auto 10px;
         }
-
         .icon-inner {
             width: 60px;
             height: 60px;
@@ -237,17 +201,14 @@
             justify-content: center;
             align-items: center;
         }
-
         .icon img {
             max-width: 40px;
             max-height: 40px;
         }
-
         .label {
             font-size: 0.9em;
             color: #333;
         }
-
         /* Animations */
         @keyframes fadeInDown {
             from {
@@ -265,7 +226,7 @@
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="Images/digi.jpg" alt="ItFirm Logo">
+                <img src="Images/digi.jpg" alt="D-X-T Logo">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -292,9 +253,8 @@
                     <input type="search" placeholder="Rechercher...">
                 </div>
                 <div class="auth-buttons">
-                <!-- venir reparer apres stp junior -->
                     <button><a href="inscription.php">Inscription</a></button>
-                    <button><a href="connexion.php">connexion</a></button>
+                    <button><a href="connexion.php">Connexion</a></button>
                 </div>
             </div>
         </div>
@@ -305,11 +265,27 @@
                 <div class="col-md-6">
                     <h1>Développez vos compétences. Nous vous aidons à atteindre vos objectifs !</h1>
                     <p>Nous vous offrons un accès à un réseau global de formation pour avancer vos carrières et atteindre vos objectifs stratégiques.</p>
-                    <!-- <button class="btn btn-primary"><a href="formation.php">Nos Services<a></button> -->
                 </div>
                 <div class="col-md-6">
                     <img src="Images/png/etu.png" alt="Hero Image" class="img-fluid">
                 </div>
+            </div>
+        </div>
+        <div class="formation-cards">
+            <div class="formation-card">
+                <img src="Images/png/formation1.png" alt="Formation 1">
+                <h3>Formation 1</h3>
+                <p>Description de la formation 1</p>
+            </div>
+            <div class="formation-card">
+                <img src="Images/png/formation2.png" alt="Formation 2">
+                <h3>Formation 2</h3>
+                <p>Description de la formation 2</p>
+            </div>
+            <div class="formation-card">
+                <img src="Images/png/formation3.png" alt="Formation 3">
+                <h3>Formation 3</h3>
+                <p>Description de la formation 3</p>
             </div>
         </div>
     </section>
@@ -322,9 +298,7 @@
                 </div>
                 <div class="col-md-6">
                     <h2>Bienvenue à D-X-T !</h2>
-                    <p>Nous sommes spécialisés dans les technologies numériques. Notre mission est de vous aider à développer vos compétences et à réussir dans le monde 
-                    numérique. Nous proposons des formations de haute qualité, accessibles en ligne, pour vous aider à atteindre vos objectifs professionnels. Rejoignez notre communauté d'apprenants et de professionnels pour partager
-                    vos connaissances et vos expériences.</p>
+                    <p>Nous sommes spécialisés dans les technologies numériques. Notre mission est de vous aider à développer vos compétences et à réussir dans le monde numérique. Nous proposons des formations de haute qualité, accessibles en ligne, pour vous aider à atteindre vos objectifs professionnels. Rejoignez notre communauté d'apprenants et de professionnels pour partager vos connaissances et vos expériences.</p>
                     <button class="btn btn-primary">Nous Rejoindre</button>
                 </div>
             </div>
@@ -400,24 +374,8 @@
         <div class="arrow-left">&#8249;</div>
         <div class="arrow-right">&#8250;</div>
     </section>
-    
-    <style>
-        .contact {
-            padding: 50px 20px;
-            background-color: #e9ecef;
-        }
-
-        .contact-image img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .contact-form h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-    </style>
     <section class="contact">
+        <div class="container">
             <div class="row">
                 <div class="col-md-6 mb-4">
                     <div class="contact-image">
@@ -445,10 +403,9 @@
                     </div>
                 </div>
             </div>
-        </section>
-        <?php
-            require_once 'foote.php';
-        ?>
+        </div>
+    </section>
+    <?php include 'foote.php'; ?> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // JavaScript pour les flèches de défilement des services
