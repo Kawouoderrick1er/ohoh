@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Styles CSS personnalisés */
+        button a{
+   text-decoration: none;  
+   color: var(--light);
+   font-weight:700;
+   /* font-size: 8px; */
+}
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -270,24 +276,25 @@
                         <a class="nav-link active" href="#">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
+                        <a class="nav-link" href="formation.php">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Profil</a>
+                        <a class="nav-link" href="profile.php">Profil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Blog</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link" href="contact.php">Contact</a>
                     </li>
                 </ul>
                 <div class="search-bar">
                     <input type="search" placeholder="Rechercher...">
                 </div>
                 <div class="auth-buttons">
-                    <button>Inscription</button>
-                    <button>Connexion</button>
+                <!-- venir reparer apres stp junior -->
+                    <button><a href="inscription.php">Inscription</a></button>
+                    <button><a href="connexion.php">connexion</a></button>
                 </div>
             </div>
         </div>
@@ -298,7 +305,7 @@
                 <div class="col-md-6">
                     <h1>Développez vos compétences. Nous vous aidons à atteindre vos objectifs !</h1>
                     <p>Nous vous offrons un accès à un réseau global de formation pour avancer vos carrières et atteindre vos objectifs stratégiques.</p>
-                    <button class="btn btn-primary">Nos Services</button>
+                    <!-- <button class="btn btn-primary"><a href="formation.php">Nos Services<a></button> -->
                 </div>
                 <div class="col-md-6">
                     <img src="Images/png/etu.png" alt="Hero Image" class="img-fluid">
@@ -388,7 +395,7 @@
             </div>
         </div>
         <div class="text-center">
-            <a href="#" class="btn btn-primary"><strong>+</strong> Voir toutes les catégories</a>
+            <a href="formation.php" class="btn btn-primary"><strong>+</strong> Voir toutes les catégories</a>
         </div>
         <div class="arrow-left">&#8249;</div>
         <div class="arrow-right">&#8250;</div>

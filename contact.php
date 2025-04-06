@@ -1,36 +1,89 @@
+<?php
+use PHPMailer\PHPMailer\PHPMailer;
+$message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_SPECIAL_CHARS);
+$mailtosend = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_SPECIAL_CHARS);
+$btn = filter_input(INPUT_POST, 'envoyer', FILTER_SANITIZE_SPECIAL_CHARS);
+require_once "send_contact.php";
+if(isset($btn) && $btn =="envoyer"){
+    $mail = new PHPMailer(true);
+        envoiemail($mail, $mailtosend, $message);
+}
+?>
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contactez-nous</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        .form-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        .form-group input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-group input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        .submit-btn {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h2>Contactez-nous</h2>
-        <?php if (isset($_GET['success'])): ?>
-            <div class="alert alert-success" role="alert">
-                Votre message a été envoyé avec succès.
+    <div class="form-container">
+        <h2>formulaire de contact</h2>
+        <form action="#" method="post">
+            <div class="form-group">
+                <label for="email">Adresse email:</label>
+                <input type="email" id="email" name="email" placeholder="votre email" autocomplete="off" required>
             </div>
-        <?php elseif (isset($_GET['error'])): ?>
-            <div class="alert alert-danger" role="alert">
-                Une erreur s'est produite lors de l'envoi de votre message. Veuillez réessayer.
+            <div class="form-group">
+                <label for="message">votre message:</label>
+                <input type="text" id="message" name="message" placeholder="votre message" autocomplete="off" required>
             </div>
-        <?php endif; ?>
-        <form action="send_contact.php" method="post">
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Entrez votre email" required>
-            </div>
-            <div class="mb-3">
-                <label for="message" class="form-label">Message</label>
-                <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
-            </div>
-            <button type="submit" name="envoyer" value="envoyer" class="btn btn-primary">Envoyer</button>
+            <button type="submit" name="envoyer" value="envoyer" class="submit-btn">Envoyer</button>
         </form>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

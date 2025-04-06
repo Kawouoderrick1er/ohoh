@@ -1,56 +1,41 @@
 <?php
-// Importer les classes PHPMailer dans l’espace global
+//Import PHPMailer classes into the global namespace
+//These must be at the top of your script, not inside a function
+
+// require 'PHPMailer/src/Exception.php';
+// require 'PHPMailer/src/PHPMailer.php';
+// require 'PHPMailer/src/SMTP.php';
 use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-// Charger l'autoload généré par Composer
+//Load Composer's autoloader (created by composer, not included with PHPMailer)
 require 'vendor/autoload.php';
 
-// Fonction d'envoi d'email
-function sendEmail($to, $from, $message) {
-    $mail = new PHPMailer(true); // Crée une instance de PHPMailer avec gestion des exceptions
+//Create an instance; passing `true` enables exceptions
+$mail = new PHPMailer(true);
 
-    try {
-        // Configuration du serveur SMTP
-        $mail->isSMTP();                                // Utiliser SMTP
-        $mail->Host       = 'smtp.gmail.com';           // Adresse du serveur SMTP
-        $mail->SMTPAuth   = true;                       // Activer l'authentification SMTP
-        $mail->Username   = 'kawouoderrick@gmail.com';      // Ton adresse Gmail
-        $mail->Password   = '237@derrick';         // Le mot de passe de ton application Gmail (voir explication ci-dessous)
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;// Activer le chiffrement SSL/TLS
-        $mail->Port       = 465;                         // Port sécurisé pour SMTP
+    function envoiemail($mail, $mailtosend, $message){
+    //Server settings
+    $mail->SMTPDebug =0;                      //Enable verbose debug output
+    $mail->isSMTP();                                            //Send using SMTP
+    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+    $mail->Username   = 'kawouoderrick@gmail.com';                     //SMTP username
+    $mail->Password   = 'hkebszfedxvgynis';                               //SMTP password
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
-        // Expéditeur et destinataire
-        $mail->setFrom($from, 'Formulaire de contact'); // Email de l’expéditeur (celui qui remplit le formulaire)
-        $mail->addAddress($to);                         // Email du destinataire (ex: toi-même)
+    //Recipients
+    $mail->setFrom('kawouoderrick@gmail.com', 'abonnez vous a DXT');
+    $mail->addAddress($mailtosend, 'derrick User');
+    
+    //Content
+    $mail->isHTML(true);                                  //Set email format to HTML
+    $mail->Subject = 'formation en ligne';
+    $mail->Body    = ' <b>'.$message.'</b>';
+    $mail->AltBody = '';
 
-        // Contenu de l’email
-        $mail->isHTML(true);                            // Format HTML
-        $mail->Subject = 'BIENVENUE CHEZ DIGITAL TECHNOLOGY';  // Sujet de l'email
-        $mail->Body    = 'Message : <b>' . nl2br($message) . '</b>'; // Corps HTML
-        $mail->AltBody = 'Message : ' . $message;       // Version texte brut (fallback)
-
-        $mail->send();
-        return true; // Succès
-    } catch (Exception $e) {
-        return false; // Erreur
-    }
-}
-
-// Traitement du formulaire
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['envoyer'])) {
-    $email = $_POST['email'];    // Email de l'expéditeur
-    $message = $_POST['message'];
-
-    // Adresse à laquelle tu veux recevoir tous les messages
-    $destinataire = 'ton_email@gmail.com'; 
-
-    if (sendEmail($destinataire, $email, $message)) {
-        header("Location: contact.php?success=1"); // Succès
-    } else {
-        header("Location: contact.php?error=1");   // Erreur
-    }
-} else {
-    header("Location: contact.php"); // Rediriger si mauvaise requête
-    exit();
-}
+    $mail->send();
+    echo 'Message  a ete envoyer avec succé';
+} 
