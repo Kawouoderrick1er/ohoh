@@ -69,6 +69,7 @@ if(isset($btn) && $btn =="envoyer"){
             background-color: #0056b3;
         }
     </style>
+    <!-- include 'navigation.php'; -->
 </head>
 <body>
     <div class="form-container">

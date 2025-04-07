@@ -1,22 +1,21 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header("Location: connexion.php");
-    exit();
-}
-
+// session_start();
+// if (!isset($_SESSION['user_id'])) {
+//     header("Location: connexion.php");
+//     exit();
+// }
+require_once 'base.php'; // Assurez-vous que le fichier de connexion à la base de données est inclus ici
 $message = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['save'])) {
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $phone = $_POST['phone'];
+try {
+    $conn = new PDO("mysql:host=localhost;dbname=formation_professionnelle", "root", "");
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // Connexion à la base de données
-        try {
-            $conn = new PDO("mysql:host=localhost;dbname=formation_professionnelle", "root", "");
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (isset($_POST['save'])) {
+            $username = htmlspecialchars(trim($_POST['username']));
+            $email = htmlspecialchars(trim($_POST['email']));
+            $phone = htmlspecialchars(trim($_POST['phone']));
 
             // Mise à jour des informations utilisateur
             $sql = "UPDATE utilisateurs SET nom = :nom, email = :email, telephone = :telephone WHERE id = :id";
@@ -31,16 +30,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 $message = "Erreur lors de la sauvegarde des informations.";
             }
-        } catch (PDOException $e) {
-            $message = "Erreur de connexion à la base de données: " . $e->getMessage();
-        }
-    } elseif (isset($_POST['delete'])) {
-        $field = $_POST['field'];
-
-        // Connexion à la base de données
-        try {
-            $conn = new PDO("mysql:host=localhost;dbname=formation_professionnelle", "root", "");
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } elseif (isset($_POST['delete'])) {
+            $field = htmlspecialchars(trim($_POST['field']));
 
             // Suppression de l'information utilisateur spécifique
             $sql = "UPDATE utilisateurs SET $field = NULL WHERE id = :id";
@@ -52,15 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 $message = "Erreur lors de la suppression de l'information.";
             }
-        } catch (PDOException $e) {
-            $message = "Erreur de connexion à la base de données: " . $e->getMessage();
-        }
-    } elseif (isset($_POST['deleteAll'])) {
-        // Connexion à la base de données
-        try {
-            $conn = new PDO("mysql:host=localhost;dbname=formation_professionnelle", "root", "");
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+        } elseif (isset($_POST['deleteAll'])) {
             // Suppression de toutes les informations utilisateur
             $sql = "UPDATE utilisateurs SET nom = NULL, email = NULL, telephone = NULL WHERE id = :id";
             $stmt = $conn->prepare($sql);
@@ -71,17 +54,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 $message = "Erreur lors de la suppression des informations.";
             }
-        } catch (PDOException $e) {
-            $message = "Erreur de connexion à la base de données: " . $e->getMessage();
         }
     }
-}
 
-// Récupération des informations utilisateur
-try {
-    $conn = new PDO("mysql:host=localhost;dbname=formation_professionnelle", "root", "");
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+    // Récupération des informations utilisateur
     $sql = "SELECT * FROM utilisateurs WHERE id = :id";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $_SESSION['user_id']);
@@ -89,7 +65,7 @@ try {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Récupération des formations suivies par l'utilisateur
-    $sql = "SELECT formation FROM inscriptions WHERE utilisateur_id = :id";
+    $sql = "SELECT nom_formation FROM inscriptions WHERE utilisateur_id = :id";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $_SESSION['user_id']);
     $stmt->execute();
@@ -102,6 +78,11 @@ try {
 // Initialiser $formations comme un tableau vide s'il n'existe pas
 if (!isset($formations)) {
     $formations = [];
+}
+
+// Initialiser $user comme un tableau vide s'il n'existe pas
+if (!$user) {
+    $user = ['nom' => '', 'email' => '', 'telephone' => ''];
 }
 ?>
 <!DOCTYPE html>
@@ -210,6 +191,13 @@ if (!isset($formations)) {
 </head>
 <body>
     <div class="profile-container">
+        <div class="profile-image">
+            <h2>Image de Profil</h2>
+            <img src="default-profile.png" id="profilePic" alt="Profile Picture">
+            <input type="file" id="fileInput" accept="image/*" onchange="loadFile(event)">
+            <label for="fileInput"><i class="fas fa-camera"></i> Changer Image</label>
+        </div>
+
         <div class="profile-info">
             <h2>Informations Utilisateur</h2>
             <?php if ($message): ?>
@@ -235,17 +223,12 @@ if (!isset($formations)) {
                 <button type="submit" name="deleteAll"><i class="fas fa-trash-alt"></i> Supprimer</button>
             </form>
         </div>
-        <div class="profile-image">
-            <h2>Image de Profil</h2>
-            <img src="default-profile.png" id="profilePic" alt="Profile Picture">
-            <input type="file" id="fileInput" accept="image/*" onchange="loadFile(event)">
-            <label for="fileInput"><i class="fas fa-camera"></i> Changer Image</label>
-        </div>
+
         <div class="formation-list">
             <h3>Formations Suivies</h3>
             <ul>
                 <?php foreach ($formations as $formation): ?>
-                    <li><?php echo htmlspecialchars($formation['formation']); ?></li>
+                    <li><?php echo htmlspecialchars($formation['nom_formation']); ?></li>
                 <?php endforeach; ?>
             </ul>
         </div>

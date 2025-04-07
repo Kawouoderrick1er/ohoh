@@ -223,7 +223,8 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light">
+<?php include 'navigation.php'; ?>
+    <!-- <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <img src="Images/digi.jpg" alt="D-X-T Logo">
@@ -258,7 +259,7 @@
                 </div>
             </div>
         </div>
-    </nav>
+    </nav> -->
     <section class="hero">
         <div class="container">
             <div class="row align-items-center">
