@@ -91,7 +91,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Accueil</a>
+                        <a class="nav-link active" href="navbar.php">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="A_propos.php">A propos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="formation.php">Services</a>
