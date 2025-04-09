@@ -18,7 +18,7 @@ include 'navigation.php';
     <!-- Font Awesome (déjà inclus via navigation.php si c'est le cas, sinon décommentez) -->
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> -->
 
-    <style>
+    <!-- <style>
         /* Styles spécifiques pour la page À Propos */
         body {
             background-color: #f8f9fa; /* Fond légèrement gris */
@@ -121,7 +121,7 @@ include 'navigation.php';
             font-weight: bold;
         }
 
-    </style>
+    </style> -->
 </head>
 <body>
 

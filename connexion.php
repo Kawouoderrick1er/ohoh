@@ -1,98 +1,131 @@
-<?php
-session_start();
+<?php // c:\xampp\htdocs\ohoh\connexion.php
+session_start(); // Démarrer la session pour stocker les infos utilisateur
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['connexion'])) {
-    $email = $_POST['email'];
-    $mot_de_passe = $_POST['mot_de_passe'];
+// Si l'utilisateur est déjà connecté, rediriger vers le profil ou l'accueil
+if (isset($_SESSION['user_id'])) {
+    header("Location: profile.php"); // Ou navbar.php
+    exit();
+}
 
-    // Connexion à la base de données
-    try {
-        $conn = new PDO("mysql:host=localhost;dbname=formation_professionnelle", "root", "");
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// Inclure la configuration de la base de données ou la connexion directe
+require_once 'base.php'; // Assurez-vous que ce fichier contient la connexion PDO $conn
 
-        // Vérification des informations de connexion
-        $sql = "SELECT * FROM utilisateurs WHERE email = :email";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+$message = '';
+$message_type = 'danger'; // Par défaut 'danger' pour les erreurs
 
-        if ($user && password_verify($mot_de_passe, $user['mot_de_passe'])) {
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_name'] = $user['nom'];
-            $message = "Connexion réussie!";
-        } else {
-            $message = "Email ou mot de passe incorrect.";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['mot_de_passe'] ?? '';
+
+    if (empty($email) || empty($password)) {
+        $message = "Veuillez saisir votre email et votre mot de passe.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $message = "L'adresse email n'est pas valide.";
+    } else {
+        try {
+            // Rechercher l'utilisateur par email
+            $sql = "SELECT id, nom, email, mot_de_passe, type_utilisateur FROM utilisateurs WHERE email = :email";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // Vérifier si l'utilisateur existe et si le mot de passe est correct
+            if ($user && password_verify($password, $user['mot_de_passe'])) {
+                // Mot de passe correct : Démarrer la session
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_name'] = $user['nom'];
+                $_SESSION['user_type'] = $user['type_utilisateur']; // 'etudiant', 'formateur', 'administrateur'
+
+                // Rediriger en fonction du type d'utilisateur
+                if ($user['type_utilisateur'] == 'administrateur') {
+                    // Stocker l'ID admin spécifiquement si nécessaire pour le dashboard
+                    $_SESSION['admin_id'] = $user['id'];
+                    $_SESSION['admin_name'] = $user['nom'];
+                    header("Location: admin_dashboard.php");
+                } else {
+                    // Pour étudiants et formateurs, rediriger vers le profil
+                    header("Location: profile.php");
+                }
+                exit(); // Important après une redirection
+
+            } else {
+                // Utilisateur non trouvé ou mot de passe incorrect
+                $message = "Email ou mot de passe incorrect.";
+            }
+        } catch (PDOException $e) {
+            // En production, logguer l'erreur détaillée
+            error_log("Erreur de connexion: " . $e->getMessage());
+            $message = "Erreur technique lors de la connexion. Veuillez réessayer plus tard.";
         }
-    } catch (PDOException $e) {
-        $message = "Erreur de connexion à la base de données: " . $e->getMessage();
     }
 }
+
+include 'navigation.php'; // Inclure la barre de navigation
 ?>
-<!DOCTYPE html>
-<html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .connexion-container {
-            background-color: white;
-            padding: 20px;
+    <title>Connexion - D-X-T</title>
+     <!-- <style>
+        .form-container {
+            max-width: 500px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background-color: #fff;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
-        .connexion-container h2 {
-            margin-bottom: 20px;
+        .form-container h2 {
+            text-align: center;
+            color: #343a40;
+            margin-bottom: 1.5rem;
         }
-        .connexion-container input, .connexion-container button {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        .connexion-container button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            transition: background-color 0.3s ease-in-out;
-        }
-        .connexion-container button:hover {
-            background-color: #0056b3;
-        }
-        .message {
-            margin-bottom: 20px;
-            color: red;
-        }
-        .message.success {
-            color: green;
-        }
-    </style>
+        .form-label .text-danger { font-size: 0.9em; margin-left: 2px; }
+
+        /* Styles pour les animations JS */
+        .fade-in { opacity: 0; }
+        .animate-on-scroll { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+        .form-group-animate { opacity: 0; transform: translateY(20px); }
+    </style> -->
 </head>
-<body>
-    <div class="connexion-container">
+
+<main class="container mt-5 mb-5">
+    <div class="form-container fade-in">
         <h2>Connexion</h2>
-        <?php if (isset($message)): ?>
-            <p class="message <?php echo $message === 'Connexion réussie!' ? 'success' : ''; ?>"><?php echo $message; ?></p>
+
+        <?php if (!empty($message)): ?>
+            <div class="alert alert-<?php echo $message_type; ?>" role="alert">
+                <?php echo htmlspecialchars($message); ?>
+            </div>
         <?php endif; ?>
-        <form action="connexion.php" method="post">
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="mot_de_passe" placeholder="Mot de passe" required>
-            <button type="submit" name="connexion">Connexion</button>
+
+        <form action="connexion.php" method="post" novalidate>
+            <div class="mb-3 form-group-animate">
+                <label for="email" class="form-label">Adresse Email <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" id="email" name="email" required value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
+            </div>
+            <div class="mb-3 form-group-animate">
+                <label for="mot_de_passe" class="form-label">Mot de passe <span class="text-danger">*</span></label>
+                <input type="password" class="form-control" id="mot_de_passe" name="mot_de_passe" required>
+            </div>
+             <div class="mb-3 form-check form-group-animate">
+                <input type="checkbox" class="form-check-input" id="rememberMe">
+                <label class="form-check-label" for="rememberMe">Se souvenir de moi</label>
+            </div>
+            <div class="d-grid gap-2 form-group-animate">
+                <button type="submit" class="btn btn-primary btn-lg">Se connecter</button>
+            </div>
+             <p class="text-center mt-3 form-group-animate">
+                <a href="#">Mot de passe oublié ?</a>
+            </p>
+            <p class="text-center mt-2 form-group-animate">
+                Pas encore de compte ? <a href="inscription.php">Inscrivez-vous</a>
+            </p>
         </form>
     </div>
-</body>
-</html>
+</main>
+
+<?php include 'foote.php'; // Inclure le pied de page ?>

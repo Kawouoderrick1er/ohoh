@@ -16,6 +16,7 @@ if (!isset($_SESSION['admin_id'])) {
 // --- Configuration des Tables Gérables ---
 // Décrit comment chaque section du tableau de bord interagit avec la base de données.
 $config_tables = [
+    
     // Gestion des Apprenants (basée sur la table 'utilisateurs')
     'apprenants' => [
         'table_name' => 'utilisateurs',      // Table SQL réelle
@@ -75,6 +76,19 @@ $config_tables = [
             'description' => ['label' => 'Description', 'type' => 'textarea', 'required' => true],
             'formateur_id' => ['label' => 'ID Formateur', 'type' => 'number', 'required' => false], // Champ numérique simple pour l'ID
             'date_creation' => ['label' => 'Créé le', 'type' => 'datetime', 'readonly' => true],
+            // Dans la config 'cours' et 'lecons'
+        'statut' => [
+            'label' => 'Statut',
+            'type' => 'select', // Utiliser un select
+            'options' => [      // Définir les options
+                'publié' => 'Publié',
+                'brouillon' => 'Brouillon',
+                'archivé' => 'Archivé'
+            ],
+            'required' => true,
+            'default' => 'brouillon' // Valeur par défaut
+        ],
+
             // Amélioration future: Remplacer 'formateur_id' par une liste déroulante des formateurs
         ]
         // Pas de list_condition ou insert_values spécifiques ici par défaut
@@ -90,6 +104,19 @@ $config_tables = [
             'contenu' => ['label' => 'Contenu', 'type' => 'textarea', 'required' => true],
             'cours_id' => ['label' => 'ID Cours Parent', 'type' => 'number', 'required' => true], // ID du cours auquel la leçon appartient
             'date_creation' => ['label' => 'Créé le', 'type' => 'datetime', 'readonly' => true],
+            // Dans la config 'cours' et 'lecons'
+        'statut' => [
+            'label' => 'Statut',
+            'type' => 'select', // Utiliser un select
+            'options' => [      // Définir les options
+                'publié' => 'Publié',
+                'brouillon' => 'Brouillon',
+                'archivé' => 'Archivé'
+            ],
+            'required' => true,
+            'default' => 'brouillon' // Valeur par défaut
+        ],
+
              // Amélioration future: Remplacer 'cours_id' par une liste déroulante des cours
         ]
     ],

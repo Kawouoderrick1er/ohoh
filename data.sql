@@ -103,3 +103,21 @@ CREATE TABLE formations (
 ALTER TABLE utilisateurs 
 ADD telephone VARCHAR(15) NULL DEFAULT NULL AFTER mot_de_passe,
 ADD adresse TEXT AFTER telephone;
+
+ALTER TABLE cours
+ADD COLUMN statut ENUM ('publié', 'brouillon' , 'archive') DEFAULT 'brouillon';
+
+ALTER TABLE lecons
+ADD COLUMN statut ENUM ('publié', 'brouillon' , 'archive') DEFAULT 'brouillon';
+-- Créer la table pour stocker les messages du formulaire de contact
+CREATE TABLE messages_contact (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    sujet VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    date_reception TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    statut ENUM('nouveau', 'lu', 'répondu', 'archivé') DEFAULT 'nouveau',
+    ip_adresse VARCHAR(45) NULL, -- Optionnel: stocker l'IP pour référence
+    user_agent TEXT NULL       -- Optionnel: stocker le navigateur
+);

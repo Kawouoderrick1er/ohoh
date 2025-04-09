@@ -1,422 +1,150 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D-X-T</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* Styles CSS personnalisés */
-        button a {
-            text-decoration: none;
-            color: var(--light);
-            font-weight: 700;
-        }
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-        .navbar {
-            background-color: #f0f0f0;
-            padding: 20px 0;
-        }
-        .navbar-brand img {
-            height: 40px;
-        }
-        .navbar-nav .nav-link {
-            color: #333;
-            margin: 0 15px;
-        }
-        .navbar-nav .nav-link:hover {
-            color: #007bff;
-        }
-        .hero {
-            background: linear-gradient(to right, #6a11cb, #2575fc);
-            color: white;
-            text-align: left;
-            padding: 100px 20px;
-            position: relative;
-            overflow: visible;
-        }
-        .hero h1 {
-            font-size: 3em;
-            margin-bottom: 20px;
-            animation: fadeInDown 1s ease-in-out;
-        }
-        .hero p {
-            font-size: 1.2em;
-            margin-bottom: 30px;
-            animation: fadeInDown 1.5s ease-in-out;
-        }
-        .services {
-            position: relative;
-            padding: 50px 20px;
-        }
-        .service-item {
-            text-align: center;
-            padding: 20px;
-            transition: transform 0.3s ease-in-out;
-        }
-        .service-item:hover {
-            transform: scale(1.05);
-        }
-        .service-item img {
-            height: 50px;
-            margin-bottom: 20px;
-        }
-        .about {
-            background-color: #f8f9fa;
-            padding: 50px 20px;
-        }
-        .about img {
-            max-width: 100%;
-            height: auto;
-        }
-        footer {
-            background-color: #343a40;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-        }
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-            transition: background-color 0.3s ease-in-out;
-        }
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-        }
-        .arrow-left, .arrow-right {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 2em;
-            color: #007bff;
-            cursor: pointer;
-            user-select: none;
-        }
-        .arrow-left {
-            left: 10px;
-        }
-        .arrow-right {
-            right: 10px;
-        }
-        .search-bar {
-            margin-right: 20px;
-        }
-        .search-bar input[type="search"] {
-            border-radius: 20px;
-            padding: 8px 15px;
-            border: 1px solid #ccc;
-        }
-        .auth-buttons button {
-            margin-left: 10px;
-            padding: 8px 15px;
-            border-radius: 20px;
-            border: none;
-            cursor: pointer;
-            background-color: #007bff;
-            color: white;
-            transition: background-color 0.3s ease-in-out;
-        }
-        .auth-buttons button:hover {
-            background-color: rgba(15, 14, 14, 0.73);
-        }
-        .auth-buttons button:active {
-            transform: scale(0.95);
-        }
-        /* Styles responsives */
-        @media (max-width: 768px) {
-            .search-bar, .auth-buttons {
-                display: block;
-                width: 100%;
-                margin: 10px 0;
-                text-align: center;
-            }
-            .search-bar input[type="search"] {
-                width: 80%;
-            }
-            .auth-buttons button {
-                width: 40%;
-                margin: 5px;
-            }
-        }
-        /* Styles pour les cartes de formation */
-        .formation-cards {
-            display: flex;
-            justify-content: center;
-            position: absolute;
-            bottom: -50px;
-            left: 0;
-            right: 0;
-            padding: 0 20px;
-        }
-        .formation-card {
-            background-color: white;
-            padding: 20px;
-            margin: 0 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            flex: 1;
-        }
-        .formation-card img {
-            height: 80px;
-            margin-bottom: 10px;
-        }
-        .formation-card h3 {
-            font-size: 1.2em;
-        }
-        .container-categories {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-        .category {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background-color: #e0e0e0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto 10px;
-        }
-        .icon-inner {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .icon img {
-            max-width: 40px;
-            max-height: 40px;
-        }
-        .label {
-            font-size: 0.9em;
-            color: #333;
-        }
-        /* Animations */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
-</head>
-<body>
-<?php include 'navigation.php'; ?>
-    <!-- <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="Images/digi.jpg" alt="D-X-T Logo">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Accueil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="formation.php">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="profile.php">Profil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Blog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.php">Contact</a>
-                    </li>
-                </ul>
-                <div class="search-bar">
-                    <input type="search" placeholder="Rechercher...">
-                </div>
-                <div class="auth-buttons">
-                    <button><a href="inscription.php">Inscription</a></button>
-                    <button><a href="connexion.php">Connexion</a></button>
-                </div>
-            </div>
-        </div>
-    </nav> -->
-    <section class="hero">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <h1>Développez vos compétences. Nous vous aidons à atteindre vos objectifs !</h1>
-                    <p>Nous vous offrons un accès à un réseau global de formation pour avancer vos carrières et atteindre vos objectifs stratégiques.</p>
-                </div>
-                <div class="col-md-6">
-                    <img src="Images/png/etu.png" alt="Hero Image" class="img-fluid">
-                </div>
-            </div>
-        </div>
-        <div class="formation-cards">
-            <div class="formation-card">
-                <img src="Images/png/formation1.png" alt="Formation 1">
-                <h3>Formation 1</h3>
-                <p>Description de la formation 1</p>
-            </div>
-            <div class="formation-card">
-                <img src="Images/png/formation2.png" alt="Formation 2">
-                <h3>Formation 2</h3>
-                <p>Description de la formation 2</p>
-            </div>
-            <div class="formation-card">
-                <img src="Images/png/formation3.png" alt="Formation 3">
-                <h3>Formation 3</h3>
-                <p>Description de la formation 3</p>
-            </div>
-        </div>
-    </section>
-    <section class="about">
-        <div class="container">
-            <div class="row align-items-center">
-                <p class="text-center fw-bold text-uppercase fs-3">À propos de nous</p>
-                <div class="col-md-6">
-                    <img src="Images/IMG-20250319-WA0029.jpg" alt="About Us" class="img-fluid">
-                </div>
-                <div class="col-md-6">
-                    <h2>Bienvenue à D-X-T !</h2>
-                    <p>Nous sommes spécialisés dans les technologies numériques. Notre mission est de vous aider à développer vos compétences et à réussir dans le monde numérique. Nous proposons des formations de haute qualité, accessibles en ligne, pour vous aider à atteindre vos objectifs professionnels. Rejoignez notre communauté d'apprenants et de professionnels pour partager vos connaissances et vos expériences.</p>
-                    <button class="btn btn-primary">Nous Rejoindre</button>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="services">
-        <div class="container">
-            <p class="text-center fw-bold text-uppercase fs-3">NOS SERVICES</p>
-            <div class="row">
-                <div class="col-md-4 service-item">
-                    <a href="uiux-design.html">
-                        <img src="Images/IMG-20250318-WA0017.jpg" alt="Service 1">
-                        <h3>UI/UX Design</h3>
-                    </a>
-                </div>
-                <div class="col-md-4 service-item">
-                    <a href="business-consultation.html">
-                        <img src="Images/IMG-20250318-WA0017.jpg" alt="Service 2">
-                        <h3>Business Consultation</h3>
-                    </a>
-                </div>
-                <div class="col-md-4 service-item">
-                    <a href="website-development.html">
-                        <img src="Images/IMG-20250318-WA0017.jpg" alt="Service 3">
-                        <h3>Website Development</h3>
-                    </a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 service-item">
-                    <a href="formation4.html">
-                        <img src="Images/IMG-20250318-WA0017.jpg" alt="Service 4">
-                        <h3>Infographie</h3>
-                    </a>
-                </div>
-                <div class="col-md-4 service-item">
-                    <a href="formation5.html">
-                        <img src="Images/IMG-20250318-WA0017.jpg" alt="Service 5">
-                        <h3>Marketing digital</h3>
-                    </a>
-                </div>
-                <div class="col-md-4 service-item">
-                    <a href="formation6.html">
-                        <img src="Images/IMG-20250318-WA0017.jpg" alt="Service 6">
-                        <h3>Audit SI</h3>
-                    </a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 service-item">
-                    <a href="formation7.html">
-                        <img src="Images/IMG-20250318-WA0017.jpg" alt="Service 7">
-                        <h3>Sécurité informatique</h3>
-                    </a>
-                </div>
-                <div class="col-md-4 service-item">
-                    <a href="formation8.html">
-                        <img src="Images/IMG-20250318-WA0017.jpg" alt="Service 8">
-                        <h3>Réseau</h3>
-                    </a>
-                </div>
-                <div class="col-md-4 service-item">
-                    <a href="formation9.html">
-                        <img src="Images/IMG-20250318-WA0017.jpg" alt="Service 9">
-                        <h3>Gestion d'entreprise</h3>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="text-center">
-            <a href="formation.php" class="btn btn-primary"><strong>+</strong> Voir toutes les catégories</a>
-        </div>
-        <div class="arrow-left">&#8249;</div>
-        <div class="arrow-right">&#8250;</div>
-    </section>
-    <section class="contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <div class="contact-image">
-                        <img src="Images/IMG-20250319-WA0028.jpg" alt="Image de contact">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="contact-form">
-                        <h2>Contactez-nous</h2>
-                        <form action="#" method="post">
-                            <div class="mb-3">
-                                <label for="nom" class="form-label">Nom :</label>
-                                <input type="text" id="nom" name="nom" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email :</label>
-                                <input type="email" id="email" name="email" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="message" class="form-label">Message :</label>
-                                <textarea id="message" name="message" class="form-control" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Envoyer</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <?php include 'foote.php'; ?> 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // JavaScript pour les flèches de défilement des services
-        document.querySelector('.arrow-left').addEventListener('click', function() {
-            document.querySelector('.services .container').scrollLeft -= 300;
-        });
+<?php // c:\xampp\htdocs\ohoh\navbar.php (Page d'accueil)
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+include 'navigation.php'; // Inclut <!DOCTYPE>, <head>, <body>, <nav>, <main>
+?>
 
-        document.querySelector('.arrow-right').addEventListener('click', function() {
-            document.querySelector('.services .container').scrollLeft += 300;
-        });
-    </script>
-</body>
-</html>
+<head>
+    <title>D-X-T - Formation Professionnelle Numérique</title>
+    <!-- Les liens CSS sont dans navigation.php -->
+    <!-- Pas de <style> ici, tout est dans style.css -->
+</head>
+
+<!-- Section Héros -->
+<section class="hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 fade-in">
+                <h1 class="display-4">Développez vos compétences. <br>Atteignez vos objectifs !</h1>
+                <p class="lead">Accédez à un réseau global de formations pour booster votre carrière et réaliser vos ambitions stratégiques.</p>
+                <a href="formation.php" class="btn btn-primary btn-lg">Explorer les formations</a>
+                <a href="contact.php" class="btn btn-outline-light btn-lg">Nous contacter</a>
+            </div>
+            <div class="col-lg-6 text-center fade-in" style="transition-delay: 0.2s;">
+                <!-- !! Remplacer par une image pertinente !! -->
+                <img src="Images/png/etu.png" alt="Apprentissage en ligne" class="img-fluid hero-image">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section Pourquoi nous choisir / Fonctionnalités clés -->
+<section class="section-padding">
+    <div class="container">
+        <h2 class="section-title animate-on-scroll">Pourquoi choisir D-X-T ?</h2>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3 d-flex">
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <h3>Formateurs Experts</h3>
+                    <p>Apprenez auprès de professionnels reconnus dans leur domaine.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 d-flex">
+                <div class="feature-card animate-on-scroll" style="transition-delay: 0.1s;">
+                    <div class="feature-icon"><i class="fas fa-laptop-code"></i></div>
+                    <h3>Contenu Pratique</h3>
+                    <p>Des formations axées sur les compétences réelles demandées par le marché.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 d-flex">
+                <div class="feature-card animate-on-scroll" style="transition-delay: 0.2s;">
+                    <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                    <h3>Flexibilité Totale</h3>
+                    <p>Apprenez à votre rythme, où et quand vous voulez, grâce à notre plateforme en ligne.</p>
+                </div>
+            </div>
+             <div class="col-md-6 col-lg-3 d-flex">
+                <div class="feature-card animate-on-scroll" style="transition-delay: 0.3s;">
+                    <div class="feature-icon"><i class="fas fa-certificate"></i></div>
+                    <h3>Certifications</h3>
+                    <p>Validez vos compétences avec des certifications reconnues.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section À Propos (simplifiée) -->
+<section class="section-padding bg-light"> <!-- Fond légèrement différent -->
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 animate-on-scroll">
+                 <!-- !! Remplacer par une image pertinente !! -->
+                <img src="Images/IMG-20250319-WA0029.jpg" alt="À propos de D-X-T" class="img-fluid rounded shadow">
+            </div>
+            <div class="col-lg-6 animate-on-scroll" style="transition-delay: 0.1s;">
+                <h2 class="section-title text-start mb-4">Bienvenue chez D-X-T</h2>
+                <p class="lead mb-4">Spécialistes des technologies numériques, nous vous aidons à maîtriser les outils et compétences de demain.</p>
+                <p>Nos formations en ligne de haute qualité sont conçues pour vous propulser vers vos objectifs professionnels. Rejoignez une communauté dynamique d'apprenants et d'experts.</p>
+                <a href="A_propos.php" class="btn btn-outline-primary">En savoir plus sur nous</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section Services/Formations populaires (Aperçu) -->
+<section class="section-padding">
+    <div class="container">
+        <h2 class="section-title animate-on-scroll">Nos Formations Populaires</h2>
+        <div class="row g-4">
+            <!-- Exemple de 3 formations - Remplacer par des données réelles si possible -->
+            <div class="col-md-4 d-flex">
+                 <div class="card formation-card animate-on-scroll">
+                    <img src="Images/formation-placeholder.jpg" class="card-img-top" alt="Formation Web">
+                    <div class="card-body">
+                        <h5 class="card-title">Développement Web Complet</h5>
+                        <p class="card-text">Maîtrisez HTML, CSS, JavaScript, PHP et plus encore pour créer des sites web modernes.</p>
+                    </div>
+                     <div class="card-footer">
+                         <small>Débutant à Intermédiaire</small>
+                         <a href="details_formation.php?id=1" class="btn btn-primary btn-sm float-end">Détails</a> <!-- Mettre un ID réel -->
+                     </div>
+                </div>
+            </div>
+             <div class="col-md-4 d-flex">
+                 <div class="card formation-card animate-on-scroll" style="transition-delay: 0.1s;">
+                    <img src="Images/marketing-placeholder.jpg" class="card-img-top" alt="Formation Marketing">
+                    <div class="card-body">
+                        <h5 class="card-title">Marketing Digital Stratégique</h5>
+                        <p class="card-text">Apprenez les stratégies SEO, SEM, réseaux sociaux et content marketing.</p>
+                    </div>
+                     <div class="card-footer">
+                         <small>Tous niveaux</small>
+                         <a href="details_formation.php?id=2" class="btn btn-primary btn-sm float-end">Détails</a> <!-- Mettre un ID réel -->
+                     </div>
+                </div>
+            </div>
+             <div class="col-md-4 d-flex">
+                 <div class="card formation-card animate-on-scroll" style="transition-delay: 0.2s;">
+                    <img src="Images/design-placeholder.jpg" class="card-img-top" alt="Formation Design">
+                    <div class="card-body">
+                        <h5 class="card-title">Design UI/UX Professionnel</h5>
+                        <p class="card-text">Créez des interfaces utilisateur intuitives et esthétiques avec Figma et Adobe XD.</p>
+                    </div>
+                     <div class="card-footer">
+                         <small>Intermédiaire à Avancé</small>
+                         <a href="details_formation.php?id=3" class="btn btn-primary btn-sm float-end">Détails</a> <!-- Mettre un ID réel -->
+                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4 animate-on-scroll">
+            <a href="formation.php" class="btn btn-primary btn-lg">Voir toutes les formations</a>
+        </div>
+    </div>
+</section>
+
+<!-- Section Contact (simplifiée) -->
+<section class="section-padding bg-light">
+     <div class="container text-center">
+         <h2 class="section-title animate-on-scroll">Prêt à commencer ?</h2>
+         <p class="lead mb-4 animate-on-scroll" style="transition-delay: 0.1s;">Contactez-nous pour discuter de vos besoins ou inscrivez-vous dès aujourd'hui.</p>
+         <a href="contact.php" class="btn btn-success btn-lg me-2 animate-on-scroll" style="transition-delay: 0.2s;">Nous Contacter</a>
+         <a href="inscription.php" class="btn btn-outline-primary btn-lg animate-on-scroll" style="transition-delay: 0.3s;">S'inscrire</a>
+     </div>
+</section>
+
+
+<?php include 'foote.php'; // Inclut la fermeture de </main>, <footer>, <scripts>, </body>, </html> ?>
